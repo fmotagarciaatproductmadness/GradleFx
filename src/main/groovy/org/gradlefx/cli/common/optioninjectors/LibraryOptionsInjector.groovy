@@ -56,13 +56,17 @@ trait LibraryOptionsInjector implements CompilerOptionsRequirement, ProjectRequi
      * @param compilerOption
      */
     void addLibraries(Set<File> libraryFiles, Configuration configuration, CompilerOption compilerOption) {
-        //only add swc or ane dependencies, no use in adding pom dependencies
-        Collection<File> files = libraryFiles.findAll {
-            it.name.endsWith(FlexType.swc.toString()) || it.name.endsWith(".ane") || it.isDirectory()
+        Collection<File> files = libraryFiles.findResults {
+            it.path -= 'Air'
+            it.name.endsWith(FlexType.swc.toString()) || it.name.endsWith(FlexType.swcAir.toString())  || it.name.endsWith(".ane")  || it.isDirectory() ? it : null
         }
+
         validateFilesExist files, configuration
 
-        Collection paths = files.collect { it.path }
+        Collection paths = files.collect { 
+            it.path
+        }
+
         compilerOptions.addAll compilerOption, paths
     }
 
