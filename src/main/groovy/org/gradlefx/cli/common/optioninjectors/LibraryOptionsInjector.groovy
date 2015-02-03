@@ -57,14 +57,14 @@ trait LibraryOptionsInjector implements CompilerOptionsRequirement, ProjectRequi
      */
     void addLibraries(Set<File> libraryFiles, Configuration configuration, CompilerOption compilerOption) {
         Collection<File> files = libraryFiles.findResults {
-            it.path -= 'Air'
-            it.name.endsWith(FlexType.swc.toString()) || it.name.endsWith(FlexType.swcAir.toString())  || it.name.endsWith(".ane")  || it.isDirectory() ? it : null
+            File file = new File(it.path - 'Air')
+            file.name.endsWith(FlexType.swc.toString()) || file.name.endsWith(".ane")  || file.isDirectory() ? file : null
         }
 
         validateFilesExist files, configuration
 
         Collection paths = files.collect { 
-            it.path
+            it.path - 'Air'
         }
 
         compilerOptions.addAll compilerOption, paths
