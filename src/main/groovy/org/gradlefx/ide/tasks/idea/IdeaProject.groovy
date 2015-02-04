@@ -127,8 +127,8 @@ class IdeaProject extends AbstractIDEProject {
                     Configurations.TEST_CONFIGURATION_NAME.configName(),
                     Configurations.THEME_CONFIGURATION_NAME.configName()
             ].each { configType ->
-                project.configurations[configType].allDependencies.each { Dependency dependency ->
-
+                
+                project.configurations[configType].allDependencies.unique (false, {a, b -> a.group == b.group && a.name == b.name && a.version == b.version ? 1 : 0}).each { Dependency dependency ->                    
                     if (dependency instanceof DefaultProjectDependency) {
                         def projectDependency = dependency as DefaultProjectDependency;
                         def entryProjectRef = new Node(entries, 'entry', ['module-name':projectDependency.dependencyProject.name, 'build-configuration-name':projectDependency.dependencyProject.name])
@@ -214,6 +214,8 @@ class IdeaProject extends AbstractIDEProject {
             isNativeLib = (isNativeLib) || flexConvention.type.isNativeApp()
 
             switch (flexConvention.type) {
+                case FlexType.swcAir:
+                    configuration.@'output-file' -= 'Air'
                 case FlexType.swc:
                     if (isNativeLib) {
                         configuration.@'target-platform' = 'Desktop'
