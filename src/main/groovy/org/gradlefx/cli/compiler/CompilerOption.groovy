@@ -1363,8 +1363,18 @@ public enum CompilerOption {
      * version: AIR 14 and higher
      *
      */
-    USE_LEGACY_COMPILER("-useLegacyAOT")
+    USE_LEGACY_COMPILER("-useLegacyAOT"),
 
+    /**
+     * Application developers can use multiple native extensions from multiple sources and if the ANEs share a common symbol name, 
+     * ADT generates a “duplicate symbol in object file” error. In some cases, this error can even manifest itself as a crash at runtime.
+     * You can use the hideAneLibSymbols option to specify whether or not to make the ANE library’s symbols visible only to that library’s 
+     * sources (yes) or visible globally (no)
+     *
+     * target platform: IOS
+     *
+     */
+    HIDE_ANE_LIB_SYMBOLS("-hideAneLibSymbols")
 
     private String optionName;
 

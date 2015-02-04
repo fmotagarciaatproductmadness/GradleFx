@@ -112,6 +112,11 @@ class AIRMobileConvention  {
      */
     private Boolean nonLegacyCompiler
 
+    /**
+     * Specifies whether -hideAneLibSymbols option is used at the packaging phase
+     */
+    private Boolean hideAneLibSymbols
+    
     public AIRMobileConvention(Project project) {
         target = 'apk'
         simulatorTarget = 'apk'
@@ -222,5 +227,13 @@ class AIRMobileConvention  {
 
     void setNonLegacyCompiler(Boolean nonLegacyCompiler) {
         this.nonLegacyCompiler = nonLegacyCompiler
+    }
+
+    Boolean getHideAneLibSymbols() {
+        return hideAneLibSymbols
+    }
+
+    void hideAneLibSymbols(Boolean hideAneLibSymbols) {
+        this.hideAneLibSymbols = hideAneLibSymbols
     }
 }

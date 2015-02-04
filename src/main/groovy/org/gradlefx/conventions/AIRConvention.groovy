@@ -139,5 +139,4 @@ class AIRConvention {
     void mainSwfDir(String mainSwfDir) {
         this.mainSwfDir = mainSwfDir
     }
-
 }
